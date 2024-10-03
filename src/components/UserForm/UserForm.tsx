@@ -16,22 +16,28 @@ const UserForm: React.FC<Props> = ({ addNewUser }) => {
   const changeUser = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
 
-    let newValue: any = value;
-
     if (type === "radio") {
-      newValue = value === "online" ? true : false;
+      setNewUser((prevState) => ({
+        ...prevState,
+        active: value === "true",
+      }));
+    } else if (type === "select-one") {
+      setNewUser((prevState) => ({
+        ...prevState,
+        role: value,
+      }));
+    } else {
+      setNewUser((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
     }
-
-    setNewUser((prevState) => ({
-      ...prevState,
-      [name]: newValue,
-    }));
   };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (newUser.name.trim().length === 0 && newUser.email.trim().length === 0) {
+    if (newUser.name.trim().length === 0 || newUser.email.trim().length === 0) {
       alert("Заполните все поля");
     } else {
       addNewUser({
@@ -66,6 +72,7 @@ const UserForm: React.FC<Props> = ({ addNewUser }) => {
       <div className="form-group mb-2">
         <label htmlFor="email">Email: </label>
         <input
+          type="email"
           name="email"
           id="email"
           className="form-control"
@@ -79,18 +86,30 @@ const UserForm: React.FC<Props> = ({ addNewUser }) => {
         <label htmlFor="">Activity </label>
         <p>
           <label>
-            <input type="radio" name="" value="option1" />
+            <input
+              type="radio"
+              name="active"
+              value="true"
+              checked={newUser.active === true}
+              onChange={changeUser}
+            />
             Online
           </label>
           <label>
-            <input type="radio" name="" value="option2" />
+            <input
+              type="radio"
+              name="active"
+              value="false"
+              checked={newUser.active === false}
+              onChange={changeUser}
+            />
             Offline
           </label>
         </p>
       </div>
       <div className="form-group mb-2">
         <label>Choose a role:</label>
-        <select name="" id="pet-select">
+        <select name="role" id="role-select" value={newUser.role} onChange={changeUser}>
           <option value=""> Please choose an option </option>
           <option value="">User</option>
           <option value="">Administrator</option>
@@ -98,7 +117,10 @@ const UserForm: React.FC<Props> = ({ addNewUser }) => {
         </select>
       </div>
 
-      <button className="btn btn-primary"> Add</button>
+      <button className="btn btn-primary" type="submit">
+        {" "}
+        Add
+      </button>
     </form>
   );
 };

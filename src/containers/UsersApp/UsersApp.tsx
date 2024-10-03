@@ -4,7 +4,7 @@ import Users from "../../components/Dishes/Users";
 import { useState } from "react";
 import { IUser } from "../../types";
 
-const Plovo = () => {
+const UserApp = () => {
 
   const [users, setUsers] = useState<IUser[]>([
     {
@@ -47,4 +47,4 @@ const Plovo = () => {
   );
 };
 
-export default Plovo;
+export default UserApp;

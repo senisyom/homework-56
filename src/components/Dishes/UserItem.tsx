@@ -17,6 +17,28 @@ const UserItem: React.FC<Props> = ({ user }) => {
         <div className="col-6 text-end">
           <span className="badge bg-secondary">{user.role}</span>
         </div>
+        <div className="form-group mb-2">
+          <label htmlFor="">Activity </label>
+          <p>
+            <label>
+              <input
+                type="radio"
+                name="active"
+                value="online"
+              />
+              Online
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="active"
+                value="offline"
+              />
+              Offline
+              
+            </label>
+          </p>
+        </div>
       </div>
     </div>
   );
