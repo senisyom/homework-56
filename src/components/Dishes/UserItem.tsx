@@ -1,18 +1,21 @@
 import { IUser } from "../../types";
 
 interface Props {
-  dish: IUser;
+  user: IUser;
 }
 
-const UserItem: React.FC<Props> = ({ dish }) => {
+const UserItem: React.FC<Props> = ({ user }) => {
  
 
   return (
     <div className="card mb-2 p-3">
       <div className="row" justify-content-between>
         <div className="col-6">
-          <h5 className="card-title">{dish.name}</h5>
-          <p className="card-text"> {dish.emeil} </p>
+          <h5 className="card-title">{user.name}</h5>
+          <p className="card-text"> {user.email} </p>
+        </div>
+        <div className="col-6 text-end">
+          <span className="badge bg-secondary">{user.role}</span>
         </div>
       </div>
     </div>

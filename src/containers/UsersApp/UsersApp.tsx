@@ -8,18 +8,25 @@ const Plovo = () => {
 
   const [users, setUsers] = useState<IUser[]>([
     {
-      id: "1",
+       id: "1",
       name: "Slava",
-      emeil: "slava@gmail.com",
+      email: "slava@gmail.com", 
       active: true,
+      role: "User", 
     },
     {
-      id: "1",
+      id: "2", 
       name: "Senya",
-      emeil: "senya@gmail.com",
+      email: "senya@gmail.com", 
       active: true,
+      role: "Administrator", 
     },
+  
   ]);
+
+  const addNewUser = (newUser: IUser) => {
+    setUsers(prevUsers => [...prevUsers, newUser]);
+  }
   return (
     <>
       <header>
@@ -28,7 +35,7 @@ const Plovo = () => {
       <main className="container mt-4">
         <div className="row">
           <div className="col-4 mb-2">
-            <UserForm />
+            <UserForm addNewUser={addNewUser} />
           </div>
           <div className="col-4 mb-2">
             <Users users={users} />

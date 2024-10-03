@@ -9,8 +9,8 @@ const Users: React.FC<Props> = ({ users }) => {
   
   return (
     <div>
-      {users.map((dish) => (
-        <UserItem key={dish.id} dish={dish} />
+      {users.map((user) => (
+        <UserItem key={user.id} user={user} />
       ))}
     </div>
   );

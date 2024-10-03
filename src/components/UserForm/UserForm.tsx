@@ -1,27 +1,55 @@
 import { ChangeEvent, useState } from "react";
-import { IUserMutation } from "../../types";
+import { IUser, IUserMutation } from "../../types";
 
-const UserForm = () => {
+interface Props {
+  addNewUser: (newUser: IUser) => void;
+}
+
+const UserForm: React.FC<Props> = ({ addNewUser }) => {
   const [newUser, setNewUser] = useState<IUserMutation>({
     name: "",
     email: "",
+    active: true,
+    role: "",
   });
 
-  const changeUser = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewUser(prevState => {
-      return {
-        ...prevState,
-        [e.target.name]: e.target.value,
-    }
-  })
-  }
+  const changeUser = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
 
-  const addNewUser = (e: React.FormEvent) => {
-    e.preventDefault
-  }
+    let newValue: any = value;
+
+    if (type === "radio") {
+      newValue = value === "online" ? true : false;
+    }
+
+    setNewUser((prevState) => ({
+      ...prevState,
+      [name]: newValue,
+    }));
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (newUser.name.trim().length === 0 && newUser.email.trim().length === 0) {
+      alert("Заполните все поля");
+    } else {
+      addNewUser({
+        id: String(new Date()),
+        ...newUser,
+      });
+
+      setNewUser({
+        name: "",
+        email: "",
+        active: true,
+        role: "",
+      });
+    }
+  };
 
   return (
-    <form onSubmit={addNewUser}>
+    <form onSubmit={onSubmit}>
       <div className="form-group mb-2">
         <label htmlFor="name">User: </label>
         <input
@@ -31,6 +59,7 @@ const UserForm = () => {
           className="form-control"
           value={newUser.name}
           onChange={changeUser}
+          required
         />
       </div>
 
@@ -42,29 +71,30 @@ const UserForm = () => {
           className="form-control"
           value={newUser.email}
           onChange={changeUser}
+          required
         ></input>
       </div>
 
       <div className="form-group mb-2">
-        <label htmlFor="urlImage">Activity </label>
+        <label htmlFor="">Activity </label>
         <p>
           <label>
-            <input type="radio" name="myRadio" value="option1" />
+            <input type="radio" name="" value="option1" />
             Online
           </label>
           <label>
-            <input type="radio" name="myRadio" value="option2" />
+            <input type="radio" name="" value="option2" />
             Offline
           </label>
         </p>
       </div>
       <div className="form-group mb-2">
         <label>Choose a role:</label>
-        <select name="pets" id="pet-select">
+        <select name="" id="pet-select">
           <option value=""> Please choose an option </option>
-          <option value="dog">User</option>
-          <option value="cat">Administrator</option>
-          <option value="cat">Editor</option>
+          <option value="">User</option>
+          <option value="">Administrator</option>
+          <option value="">Editor</option>
         </select>
       </div>
 
